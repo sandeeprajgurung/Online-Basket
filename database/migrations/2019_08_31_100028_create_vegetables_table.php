@@ -18,8 +18,8 @@ class CreateVegetablesTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->longtext('description');
-            $table->integer('quantity');
             $table->integer('price');
+            $table->integer('discount')->nullable();
             $table->enum('featured_product', [0,1])->default(0)->comment('0 -> disable, 1 -> enable');
             $table->timestamps();
         });
