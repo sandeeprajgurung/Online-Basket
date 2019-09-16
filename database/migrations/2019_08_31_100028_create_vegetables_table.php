@@ -20,7 +20,7 @@ class CreateVegetablesTable extends Migration
             $table->longtext('description');
             $table->integer('price');
             $table->integer('discount')->nullable();
-            $table->enum('featured_product', [0,1])->default(0)->comment('0 -> disable, 1 -> enable');
+            // $table->enum('featured_product', [0,1])->default(0)->comment('0 -> disable, 1 -> enable');
             $table->timestamps();
         });
     }
