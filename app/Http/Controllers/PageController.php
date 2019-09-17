@@ -42,6 +42,7 @@ class PageController extends Controller
     
     public function obadmin()
     {
-        return view('frontend.pages.cart');
+        // die('hereeeeeeeeee');
+        return view('backend.pages.index');
     }
 }

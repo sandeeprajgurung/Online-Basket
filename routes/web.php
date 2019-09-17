@@ -25,9 +25,10 @@ Route::get('/cart', 'PageController@cart')->name('cart');
 // backend CMS
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 Route::get('/ob-admin', 'PageController@obadmin')->name('ob_admin');
-Route::get('/ob-admin/form/vegetable', 'VegetableController@index')->name('form.vegetable');
-Route::post('/ob-admin/vegetable', 'VegetableController@store')->name('imageStore');
-Route::get('/ob-admin/vegetable', 'VegetableController@show');
-Route::post('/ob-admin/vegetable/{id}', 'VegetableController@update');
+Route::get('/ob-admin/form/vegetable', 'backend\VegetableController@index')->name('form.vegetable');
+Route::post('/ob-admin/vegetable', 'backend\VegetableController@store')->name('imageStore');
+Route::get('/ob-admin/vegetable', 'backend\VegetableController@show');
+Route::post('/ob-admin/vegetable/{id}', 'backend\VegetableController@update');
 // Route::get('/home', 'HomeController@index')->name('home');

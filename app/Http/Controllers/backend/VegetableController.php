@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Models\Vegetable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,10 +12,13 @@ class VegetableController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function index()
+
+    public function index(Request $request)
     {
-        return view('pages.test');
+        $data = Vegetable::latest()->limit(5)->get();
+        // dd($data);
+        $mediaItems = $data->getMedia()->first()->getUrl();
+        dd($mediaItems);
     }
 
     public function create()
@@ -55,6 +59,8 @@ class VegetableController extends Controller
     {
         $data = Vegetable::latest()->limit(5)->get();
         // dd($data);
+        // $mediaItems = $data->getMedia();
+        // dd($mediaItems);
 		return $data;
     }
 
