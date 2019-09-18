@@ -15,10 +15,7 @@ class VegetableController extends Controller
 
     public function index(Request $request)
     {
-        $data = Vegetable::latest()->limit(5)->get();
-        // dd($data);
-        $mediaItems = $data->getMedia()->first()->getUrl();
-        dd($mediaItems);
+        return view('backend.pages.vegetable');
     }
 
     public function create()
@@ -55,13 +52,27 @@ class VegetableController extends Controller
         // Vegetable::create($data);
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $data = Vegetable::latest()->limit(5)->get();
-        // dd($data);
-        // $mediaItems = $data->getMedia();
-        // dd($mediaItems);
-		return $data;
+        // print_r($request->ajax);
+        if($request->ajax) {
+            $data = Vegetable::latest()->limit(5)->get();
+            foreach($data as $key => $value){
+                $value->image = $value->getFirstMediaUrl('images');
+                $item[] = $value;
+            }
+            return $item;
+        } else {
+            $data = Vegetable::all();
+            foreach($data as $key => $value){
+                $value->image = $value->getFirstMediaUrl('images');
+                $items[] = $value;
+            }
+            return view('backend.pages.table_vegetable', compact('items'));
+        }
+        // die('NO');
+        
+        
     }
 
     public function edit($id)

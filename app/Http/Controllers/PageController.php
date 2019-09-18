@@ -35,14 +35,13 @@ class PageController extends Controller
     }
 
     // ADMIN
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     
     public function obadmin()
     {
-        // die('hereeeeeeeeee');
         return view('backend.pages.index');
     }
 }

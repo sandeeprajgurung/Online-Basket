@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <label>Discount</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" v-model.number="newItem.discount" required>
+                                            <input type="number" class="form-control" v-model.number="newItem.discount">
                                             <span class="input-group-addon">%</span>
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                             
                             <div class="form-group">
                                 <label for="exampleInputFile">Upload image</label>
-                                {{-- <img :src="image" class="img-responsive" height="70" width="90"> --}}
+                                <img :src="image" class="img-responsive" height="70" width="90">
                                 <input type="file" id="file" ref="file" name="image" v-on:change="onFileChange()">
 
                                 <p class="help-block">Example block-level help text here.</p>
@@ -109,7 +109,7 @@
                         <ul v-for="item in items" class="products-list product-list-in-box">
                             <li class="item">
                                 <div class="product-img">
-                                    <img src="/images/backend/img/default-50x50.gif" alt="Product Image">
+                                    <img :src="item.image" alt="Product Image">
                                 </div>
                                 <div class="product-info">
                                     <a @click="setVal(item.id, item.name, item.description, item.price, item.discount)" class="product-title" data-toggle="modal" data-target="#modal-default">@{{ item.name }}
@@ -213,9 +213,12 @@
             },
             fetchItems() {
                 var _this = this;
-                axios.get('/ob-admin/vegetable').then(function (response){
+                axios.get('/ob-admin/vegetable', {
+                    params: {
+                        ajax: 'true'
+                    }
+                }).then(function (response){
                     _this.items = response.data;
-                    console.log(_this.items);
                 });
             },
             updateItem() {            

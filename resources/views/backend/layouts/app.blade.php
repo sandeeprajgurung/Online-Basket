@@ -16,6 +16,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
+    @yield('page-stylesheet')
     <!-- jQuery 3 -->
     <script src="/js/backend/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
