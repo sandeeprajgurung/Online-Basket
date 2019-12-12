@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Vegetable;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class VegetableController extends Controller
+class ProductController extends Controller
 {
     public function __construct()
     {
@@ -15,6 +15,14 @@ class VegetableController extends Controller
 
     public function index(Request $request)
     {
+        if($request->ajax) {
+            $data = Product::latest()->limit(5)->get();
+            foreach($data as $key => $value){
+                $value->image = $value->getFirstMediaUrl('images');
+                $item[] = $value;
+            }
+            return $item;
+        }
         return view('backend.pages.vegetable');
     }
 
@@ -24,46 +32,29 @@ class VegetableController extends Controller
 
     public function store(Request $request)
     {
-        // die('hereeeeeee');
-        // dd($request);
-        $data = new Vegetable();
+        $product = new Product;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->discount = $request->discount;
+        $product->type = $request->type;
         // dd($request->image);
-        $data->name = $request->name;
-        $data->description = $request->description;
-        $data->price = $request->price;
-        $data->discount = $request->discount;
-        // $data->image = $request->image;
-        // $data->addMedia('C:\Users\SRG\Downloads\ogin1.jpg')->toMediaCollection('images');
-        // dd($data->image);
-        $data->save();
-        $data->addMedia($request->image)->toMediaCollection('images');
-        // return $data;
-        // dd($data->name);
-        // $data = $this->validate($request, [
-        //     'data' => [
-        //     'name'=>'required',
-        //     'description'=> 'required',
-        //     'price'=>'required',
-        //     'discount'=> 'required',
-        //     'featured_product'=>'required'
-        //     ]
-        // ]);
-        // dd($data);
-        // Vegetable::create($data);
+        $product->save();
+        $product->addMedia($request->image)->toMediaCollection('images');
     }
 
     public function show(Request $request)
     {
         // print_r($request->ajax);
         if($request->ajax) {
-            $data = Vegetable::latest()->limit(5)->get();
+            $data = Product::latest()->limit(5)->get();
             foreach($data as $key => $value){
                 $value->image = $value->getFirstMediaUrl('images');
                 $item[] = $value;
             }
             return $item;
         } else {
-            $data = Vegetable::all();
+            $data = Product::all();
             foreach($data as $key => $value){
                 $value->image = $value->getFirstMediaUrl('images');
                 $items[] = $value;
@@ -83,7 +74,7 @@ class VegetableController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
-        $data = Vegetable::find($id);
+        $data = Product::find($id);
         $data->name = $request->name;
         $data->description = $request->description;
         $data->price = $request->price;

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Page;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use URL;
-use HTML;
 
 class PageController extends Controller
 {
@@ -32,6 +31,16 @@ class PageController extends Controller
     public function cart()
     {
         return view('frontend.pages.cart');
+    }
+
+    public function vegetable()
+    {
+        $data = Product::all();
+        foreach($data as $key => $value){
+            $value->image = $value->getFirstMediaUrl('images');
+            $items[] = $value;
+        }
+        return view('frontend.pages.products', compact('items'));
     }
 
     // ADMIN

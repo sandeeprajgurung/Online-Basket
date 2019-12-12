@@ -34,17 +34,17 @@
                         {{-- @csrf --}}
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="InputName">Name</label>
+                                <label for="InputName">Name*</label>
                                 <input type="text" class="form-control" id="InputName" v-model="newItem.name" placeholder="Enter Fruit name" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Description*</label>
                                 <textarea class="form-control" rows="3" v-model="newItem.description" placeholder="Enter ..."></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Price</label>
+                                        <label>Price*</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">NRs.</span>
                                             <input type="number" class="form-control" v-model.number="newItem.price" required>
@@ -61,12 +61,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type*</label>
+                                        <select class="form-control select2" style="width: 100%;" v-on:change="onChange($event)" required>
+                                            <option value="0" selected disabled>select type</option>
+                                            <option value="1">Vegetable</option>
+                                            <option value="2">Fruit</option>
+                                            <option value="3">Juice</option>
+                                            <option value="4">Dried</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             
-                            
                             <div class="form-group">
-                                <label for="exampleInputFile">Upload image</label>
-                                <img :src="image" class="img-responsive" height="70" width="90">
+                                <label for="exampleInputFile">Upload image*</label>
+                                {{-- <img :src="image" class="img-responsive" height="70" width="90"> --}}
                                 <input type="file" id="file" ref="file" name="image" v-on:change="onFileChange()">
 
                                 <p class="help-block">Example block-level help text here.</p>
@@ -183,18 +194,24 @@
                 };
                 reader.readAsDataURL(file);
             },
+            onChange:function(event){                
+                this.type = event.target.value;
+            },
             saveForm() {
                 var dataForm = new FormData();
                 var _this = this;
+                // console.log(this.type);
                 // console.log(this.file);return false;
                 dataForm.append('image', this.file);
+                dataForm.append('type', this.type);
                 dataForm.append('name', _this.newItem.name);
                 dataForm.append('description', _this.newItem.description);
                 dataForm.append('price', _this.newItem.price);
                 dataForm.append('discount', _this.newItem.discount);
-                dataForm.append('featured_product', _this.newItem.featured_product);
-                axios.post('/ob-admin/vegetable', dataForm).then(function (response) {
-                    console.log(response);
+                // dataForm.append('featured_product', _this.newItem.featured_product);
+                axios.post('/ob-admin/form', dataForm).then(function (response) {
+                    // console.log(response);
+                    $(".select2").val("0");
                     _this.newItem = {
                         name: '',
                         description: '',
@@ -205,7 +222,7 @@
                     },
                     this.file = '';
                     this.image = '';
-
+                    
                     _this.fetchItems();
                 }).catch(function (error) {
                         console.log(error);
@@ -213,7 +230,7 @@
             },
             fetchItems() {
                 var _this = this;
-                axios.get('/ob-admin/vegetable', {
+                axios.get('/ob-admin/form', {
                     params: {
                         ajax: 'true'
                     }

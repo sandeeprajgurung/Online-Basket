@@ -20,18 +20,19 @@ Route::get('/contact', 'PageController@contact')->name('contact');
 Route::get('/blog', 'PageController@blog')->name('blog');
 Route::get('/about', 'PageController@about')->name('about');
 Route::get('/cart', 'PageController@cart')->name('cart');
+Route::get('/vegetables', 'PageController@vegetable')->name('show.vegetables');
 
 // backend CMS
 Auth::routes();
 Route::group(['middleware' => ['auth']], function()
 {
     Route::get('/ob-admin', 'PageController@obadmin')->name('ob_admin');
-    Route::get('/ob-admin/form/vegetable', 'backend\VegetableController@index')->name('form.vegetable');
-    Route::post('/ob-admin/vegetable', 'backend\VegetableController@store')->name('imageStore');
-    Route::get('/ob-admin/vegetable', 'backend\VegetableController@show');
-    Route::post('/ob-admin/vegetable/{id}', 'backend\VegetableController@update');
-    Route::get('/ob-admin/table/vegetable', 'backend\VegetableController@show')->name('table.vegetable');
-    Route::get('/ob-admin/images/vegetable', 'backend\VegetableController@show')->name('image.vegetable');
+    Route::get('/ob-admin/form', 'backend\ProductController@index')->name('form');
+    Route::post('/ob-admin/form', 'backend\ProductController@store')->name('product.store');
+    // Route::get('/ob-admin/vegetable', 'backend\VegetableController@show');
+    // Route::post('/ob-admin/vegetable/{id}', 'backend\VegetableController@update');
+    // Route::get('/ob-admin/table/vegetable', 'backend\VegetableController@show')->name('table.vegetable');
+    // Route::get('/ob-admin/images/vegetable', 'backend\VegetableController@show')->name('image.vegetable');
 });
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 // Route::get('/home', 'HomeController@index')->name('home');

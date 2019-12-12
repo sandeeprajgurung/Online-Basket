@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVegetablesTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateVegetablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vegetables', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->longtext('description');
             $table->integer('price');
             $table->integer('discount')->nullable();
-            // $table->enum('featured_product', [0,1])->default(0)->comment('0 -> disable, 1 -> enable');
+            $table->enum('type', [1,2,3,4])->comment('1 -> vegetable, 2 -> fruit, 3 -> juice, 4 -> dried');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateVegetablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vegetables');
+        Schema::dropIfExists('products');
     }
 }

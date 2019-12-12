@@ -7,6 +7,9 @@
                 <h4 class="modal-title">Default Modal</h4>
             </div>
             <div class="modal-body">
+                <label class="checkbox-inline">
+                    <input type="checkbox" data-toggle="toggle"> Second
+                </label>
               <form role="form" @submit.prevent="updateItem()">
                     
                 <div class="box-body">
@@ -31,22 +34,7 @@
                     </div>
                     <!-- radio -->
                     {{-- <input type="checkbox" checked data-toggle="toggle"> --}}
-                    <div class="form-group">
-                        <label>Feature Product</label>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" v-model="newItem.featured_product">
-                                Enable
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="0" v-model="newItem.featured_product"
-                                    checked>
-                                Dissable
-                            </label>
-                        </div>
-                    </div>
+                   
 
             
             </div>
